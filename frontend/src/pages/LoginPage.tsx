@@ -42,35 +42,40 @@ export function LoginPage() {
   return (
     <main className="flex w-full min-h-screen bg-surface text-on-surface font-body-md">
       {/* Left Side: Hero / Brand Area */}
-      <section className="hidden lg:flex lg:w-1/2 relative bg-surface-container-high overflow-hidden">
+      <section className="hidden lg:flex lg:w-1/2 relative bg-[#0b1120] overflow-hidden">
         {/* Logistics Themed Background Image */}
         <div
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center mix-blend-luminosity opacity-40"
           style={{
             backgroundImage:
-              "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBPWxPpp7y028OD4SW9clS8aDlaTR2d694S0p_ANO_6QhlG8fMVRxHXnkdIXDZVJtR6VBueZgPhJ93OoQKg_jVzY_6YRtZrDw3xvJr37jC5idqR9HuSybZrOra_DTqKbzDW5fKWjItSHVuTvUzr5GBzVgNaIOEZgChIjKeaT3Z_SQl52NIFbnVolWLoglwZhliGX63wuxnSQnziF767lHDYq1MkhRfdpgNpfOpTgyhrZmvJvuWXtj7uZw')",
+              "url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')",
           }}
         />
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-primary-container/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0b1120] via-transparent to-transparent opacity-80" />
 
-        <div className="relative z-10 p-container-padding flex flex-col justify-between w-full h-full text-on-primary-container">
+        <div className="relative z-10 p-12 flex flex-col justify-between w-full h-full">
           {/* Brand Anchor Top */}
-          <div className="flex items-center gap-2">
-            <div className="bg-surface-variant/20 p-1 rounded-md flex items-center justify-center backdrop-blur-sm">
-              <span className="material-symbols-outlined text-[20px] text-on-tertiary">local_shipping</span>
+          <div className="flex items-center gap-3">
+            <div className="bg-white/10 p-2 rounded-lg flex items-center justify-center backdrop-blur-md">
+              <span className="material-symbols-outlined text-[24px] text-white">local_shipping</span>
             </div>
-            <h1 className="font-headline-md text-headline-md font-bold text-on-tertiary tracking-tight">ZoneDrop</h1>
+            <h1 className="font-display-md text-2xl font-bold text-white tracking-tight">ZoneDrop</h1>
           </div>
 
           {/* Value Prop / Quote */}
-          <div className="max-w-lg mb-12">
-            <h2 className="font-display-lg text-[64px] leading-[72px] font-bold text-on-tertiary mb-6">
-              Precision. <br />Delivered.
+          <div className="max-w-lg mb-8">
+            <h2 className="text-[64px] leading-[1.1] font-extrabold text-white tracking-tight mb-6">
+              Precision.<br />Delivered.
             </h2>
-            <p className="font-body-lg text-body-lg text-on-tertiary/80">
+            <p className="text-lg text-white/80 leading-relaxed mb-8 font-medium">
               Logistics intelligence engineered for high-performance delivery ecosystems.
             </p>
+            
+            <div className="flex items-center gap-6 text-sm font-bold tracking-widest text-white/40 uppercase">
+              <span>REAL-TIME TRACKING</span>
+              <span>OPTIMIZATION ANALYTICS</span>
+            </div>
           </div>
         </div>
       </section>

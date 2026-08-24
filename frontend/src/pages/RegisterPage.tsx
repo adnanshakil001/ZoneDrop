@@ -27,31 +27,40 @@ export function RegisterPage() {
   return (
     <main className="flex w-full min-h-screen font-sans bg-surface text-on-surface">
       {/* Left Side: Hero Area */}
-      <section className="hidden lg:flex lg:w-1/2 relative bg-primary-container overflow-hidden">
-        <div className="absolute inset-0 bg-grid-pattern opacity-10" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-primary-container via-primary-container/90 to-transparent" />
+      <section className="hidden lg:flex lg:w-1/2 relative bg-[#0b1120] overflow-hidden">
+        {/* Logistics Themed Background Image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center mix-blend-luminosity opacity-40"
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')",
+          }}
+        />
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0b1120] via-transparent to-transparent opacity-80" />
 
-        <div className="relative z-10 p-container-padding flex flex-col justify-between w-full h-full text-on-primary-container">
-          <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-[32px] text-secondary-fixed">local_shipping</span>
-            <span className="text-2xl font-black tracking-tight text-white">ZoneDrop</span>
+        <div className="relative z-10 p-12 flex flex-col justify-between w-full h-full">
+          {/* Brand Anchor Top */}
+          <div className="flex items-center gap-3">
+            <div className="bg-white/10 p-2 rounded-lg flex items-center justify-center backdrop-blur-md">
+              <span className="material-symbols-outlined text-[24px] text-white">local_shipping</span>
+            </div>
+            <h1 className="font-display-md text-2xl font-bold text-white tracking-tight">ZoneDrop</h1>
           </div>
 
-          <div className="max-w-lg mb-12">
-            <span className="inline-block px-2.5 py-1 rounded-full bg-secondary/20 border border-secondary/30 text-secondary-fixed text-xs font-semibold uppercase tracking-wider mb-4">
-              Customer Onboarding
-            </span>
-            <h2 className="text-4xl font-extrabold text-white tracking-tight leading-tight mb-4">
-              Fast, Transparent <br />
-              Parcel Logistics.
+          {/* Value Prop / Quote */}
+          <div className="max-w-lg mb-8">
+            <h2 className="text-[64px] leading-[1.1] font-extrabold text-white tracking-tight mb-6">
+              Precision.<br />Delivered.
             </h2>
-            <p className="text-sm text-slate-300 leading-relaxed">
-              Book intra-zone and inter-zone parcel deliveries with real-time volumetric rate calculation and verified audit trails.
+            <p className="text-lg text-white/80 leading-relaxed mb-8 font-medium">
+              Logistics intelligence engineered for high-performance delivery ecosystems.
             </p>
-          </div>
-
-          <div className="text-xs text-slate-400">
-            © 2026 ZoneDrop Logistics Intelligence. All rights reserved.
+            
+            <div className="flex items-center gap-6 text-sm font-bold tracking-widest text-white/40 uppercase">
+              <span>REAL-TIME TRACKING</span>
+              <span>OPTIMIZATION ANALYTICS</span>
+            </div>
           </div>
         </div>
       </section>
