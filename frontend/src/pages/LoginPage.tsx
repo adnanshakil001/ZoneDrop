@@ -56,12 +56,12 @@ export function LoginPage() {
 
         <div className="relative z-10 p-12 flex flex-col justify-between w-full h-full">
           {/* Brand Anchor Top */}
-          <div className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3 w-fit hover:opacity-90 transition-opacity">
             <div className="bg-white/10 p-2 rounded-lg flex items-center justify-center backdrop-blur-md">
               <span className="material-symbols-outlined text-[24px] text-white">local_shipping</span>
             </div>
             <h1 className="font-display-md text-2xl font-bold text-white tracking-tight">ZoneDrop</h1>
-          </div>
+          </Link>
 
           {/* Value Prop / Quote */}
           <div className="max-w-lg mb-8">
