@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mobile Delivery Agent Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#404758",
+                        "inverse-surface": "#213145",
+                        "tertiary-container": "#001f26",
+                        "primary-fixed-dim": "#c0c6db",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#cbdbf5",
+                        "on-background": "#0b1c30",
+                        "surface-container-low": "#eff4ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "secondary": "#0058be",
+                        "on-tertiary-container": "#0090a9",
+                        "tertiary-fixed-dim": "#4cd7f6",
+                        "surface-variant": "#d3e4fe",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-secondary-container": "#fefcff",
+                        "inverse-primary": "#c0c6db",
+                        "primary-fixed": "#dce2f8",
+                        "on-tertiary-fixed": "#001f26",
+                        "on-surface": "#0b1c30",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#acedff",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#000000",
+                        "on-secondary-fixed": "#001a42",
+                        "on-secondary-fixed-variant": "#004395",
+                        "on-primary-fixed": "#151b2b",
+                        "on-surface-variant": "#45464c",
+                        "surface-container-high": "#dce9ff",
+                        "surface-bright": "#f8f9ff",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "background": "#f8f9ff",
+                        "primary-container": "#151b2b",
+                        "surface": "#f8f9ff",
+                        "surface-tint": "#575e70",
+                        "secondary-fixed": "#d8e2ff",
+                        "on-primary-container": "#7d8497",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#76777d",
+                        "on-tertiary-fixed-variant": "#004e5c",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#2170e4",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#c6c6cd",
+                        "error-container": "#ffdad6",
+                        "primary": "#000000",
+                        "surface-container": "#e5eeff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "stack-sm": "8px",
+                        "unit": "4px",
+                        "stack-md": "16px",
+                        "gutter": "16px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Geist"],
+                        "mono-data": ["JetBrains Mono"],
+                        "headline-md": ["Geist"],
+                        "body-sm": ["Geist"],
+                        "label-md": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "body-md": ["Geist"],
+                        "body-lg": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "mono-data": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased pb-24">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 flex items-center justify-between px-container-padding h-16 w-full max-w-full bg-surface dark:bg-inverse-surface shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary dark:text-secondary-fixed">local_shipping</span>
+<span class="font-headline-lg text-headline-lg font-black text-secondary dark:text-secondary-fixed tracking-tight">ZoneDrop</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 bg-surface-container-high px-3 py-1.5 rounded-full">
+<div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+<span class="font-label-md text-label-md text-on-surface">Online</span>
+</div>
+<button class="p-2 rounded-full hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">my_location</span>
+</button>
+</div>
+</header>
+<main class="p-4 md:p-container-padding max-w-7xl mx-auto space-y-gutter">
+<!-- Metrics Bento Grid -->
+<div class="grid grid-cols-3 gap-unit">
+<div class="bg-surface-container-lowest p-stack-sm rounded-lg border border-outline-variant flex flex-col items-center justify-center shadow-sm">
+<span class="font-headline-md text-headline-md text-secondary font-bold">12</span>
+<span class="font-label-md text-label-md text-on-surface-variant text-center">Assigned</span>
+</div>
+<div class="bg-surface-container-lowest p-stack-sm rounded-lg border border-secondary flex flex-col items-center justify-center shadow-md relative overflow-hidden">
+<div class="absolute inset-0 bg-secondary opacity-5"></div>
+<span class="font-headline-md text-headline-md text-secondary font-bold z-10">3</span>
+<span class="font-label-md text-label-md text-on-surface z-10 font-semibold text-center">In Transit</span>
+</div>
+<div class="bg-surface-container-lowest p-stack-sm rounded-lg border border-outline-variant flex flex-col items-center justify-center shadow-sm opacity-80">
+<span class="font-headline-md text-headline-md text-on-surface-variant font-bold">45</span>
+<span class="font-label-md text-label-md text-on-surface-variant text-center">Completed</span>
+</div>
+</div>
+<!-- Active Delivery Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-lg overflow-hidden">
+<div class="p-stack-md border-b border-outline-variant bg-surface flex justify-between items-center">
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider block mb-1">Active Delivery</span>
+<span class="font-mono-data text-mono-data text-on-surface font-bold">#ZD-10482</span>
+</div>
+<div class="bg-secondary/10 px-3 py-1 rounded-full border border-secondary/20">
+<span class="font-label-md text-label-md text-secondary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">near_me</span>
+                        Out for Delivery
+                    </span>
+</div>
+</div>
+<div class="p-stack-md space-y-stack-md relative">
+<!-- Timeline/Stepper -->
+<div class="absolute left-8 top-stack-md bottom-stack-md w-0.5 bg-outline-variant border-dashed border-l-2"></div>
+<div class="flex gap-stack-md relative z-10">
+<div class="w-8 h-8 rounded-full bg-surface-container-high border-2 border-outline-variant flex items-center justify-center shrink-0 bg-white">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">storefront</span>
+</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant block mb-1">Pickup</span>
+<span class="font-body-md text-body-md text-on-surface font-medium block">ABC Warehouse</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Completed 09:15 AM</span>
+</div>
+</div>
+<div class="flex gap-stack-md relative z-10">
+<div class="w-8 h-8 rounded-full bg-secondary border-2 border-secondary flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(0,88,190,0.4)]">
+<span class="material-symbols-outlined text-[16px] text-on-secondary">location_on</span>
+</div>
+<div class="flex-1">
+<span class="font-label-md text-label-md text-on-surface-variant block mb-1">Drop-off</span>
+<span class="font-body-md text-body-md text-on-surface font-medium block">123 Main Street</span>
+<div class="mt-2 h-24 rounded-lg border border-outline-variant overflow-hidden relative">
+<!-- Map Placeholder -->
+<div class="w-full h-full bg-surface-variant flex items-center justify-center" data-location="New York City" style="">
+<span class="material-symbols-outlined text-outline">map</span>
+</div>
+<div class="absolute bottom-2 right-2 bg-surface/90 px-2 py-1 rounded shadow-sm backdrop-blur-sm border border-outline-variant">
+<span class="font-mono-data text-mono-data text-on-surface text-xs">4.8 km remaining</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="p-stack-md bg-surface-container-low border-t border-outline-variant grid grid-cols-2 gap-unit">
+<button class="bg-surface-container-lowest text-on-surface border border-outline-variant font-body-sm text-body-sm font-semibold py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-surface-variant active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">phone</span> Contact
+                </button>
+<button class="bg-secondary text-on-secondary font-body-sm text-body-sm font-semibold py-3 rounded-lg flex items-center justify-center gap-2 shadow-md hover:bg-secondary-container active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">check_circle</span> Delivered
+                </button>
+<button class="col-span-2 bg-surface text-error border border-error/30 font-body-sm text-body-sm font-medium py-2 mt-2 rounded-lg hover:bg-error-container/20 active:scale-95 transition-all">
+                    Report Issue / Failed
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 md:hidden bg-surface dark:bg-inverse-surface shadow-[0_-4px_20px_rgba(11,18,33,0.05)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant tap-highlight-transparent active:scale-95 transition-transform p-2" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">home</span>
+<span class="font-label-md text-label-md mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-4 py-2 tap-highlight-transparent active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">assignment</span>
+<span class="font-label-md text-label-md mt-1 font-bold">My Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant tap-highlight-transparent active:scale-95 transition-transform p-2" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">explore</span>
+<span class="font-label-md text-label-md mt-1">Map</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant tap-highlight-transparent active:scale-95 transition-transform p-2" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_circle</span>
+<span class="font-label-md text-label-md mt-1">Account</span>
+</a>
+</nav>
+</body></html>

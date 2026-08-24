@@ -1,0 +1,271 @@
+<!DOCTYPE html><html class="light" lang="en" style="width: 1280px; height: 2087px; overflow: hidden; position: relative;"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>ZoneDrop - Last Mile Delivery Software</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-tint": "#575e70",
+                      "on-surface": "#0b1c30",
+                      "surface-bright": "#f8f9ff",
+                      "secondary": "#0058be",
+                      "on-primary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "on-background": "#0b1c30",
+                      "primary-container": "#151b2b",
+                      "inverse-primary": "#c0c6db",
+                      "tertiary-fixed-dim": "#4cd7f6",
+                      "error": "#ba1a1a",
+                      "background": "#f8f9ff",
+                      "on-tertiary": "#ffffff",
+                      "tertiary": "#000000",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-high": "#dce9ff",
+                      "primary-fixed": "#dce2f8",
+                      "on-primary-fixed": "#151b2b",
+                      "on-primary-fixed-variant": "#404758",
+                      "surface": "#f8f9ff",
+                      "primary": "#000000",
+                      "surface-variant": "#d3e4fe",
+                      "surface-container": "#e5eeff",
+                      "on-secondary-fixed": "#001a42",
+                      "on-secondary": "#ffffff",
+                      "surface-dim": "#cbdbf5",
+                      "on-secondary-container": "#fefcff",
+                      "tertiary-container": "#001f26",
+                      "on-error": "#ffffff",
+                      "on-surface-variant": "#45464c",
+                      "inverse-surface": "#213145",
+                      "on-tertiary-fixed": "#001f26",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "on-tertiary-container": "#0090a9",
+                      "tertiary-fixed": "#acedff",
+                      "outline-variant": "#c6c6cd",
+                      "primary-fixed-dim": "#c0c6db",
+                      "outline": "#76777d",
+                      "error-container": "#ffdad6",
+                      "surface-container-low": "#eff4ff",
+                      "secondary-container": "#2170e4",
+                      "on-primary-container": "#7d8497",
+                      "on-tertiary-fixed-variant": "#004e5c",
+                      "surface-container-highest": "#d3e4fe",
+                      "secondary-fixed": "#d8e2ff",
+                      "on-secondary-fixed-variant": "#004395",
+                      "inverse-on-surface": "#eaf1ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-padding": "24px",
+                      "stack-lg": "32px",
+                      "gutter": "16px",
+                      "stack-sm": "8px",
+                      "unit": "4px",
+                      "stack-md": "16px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Geist"],
+                      "headline-sm": ["Geist"],
+                      "body-sm": ["Geist"],
+                      "headline-md": ["Geist"],
+                      "body-md": ["Geist"],
+                      "label-md": ["Geist"],
+                      "display-lg": ["Geist"],
+                      "mono-data": ["JetBrains Mono"],
+                      "body-lg": ["Geist"]
+              },
+              "fontSize": {
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-surface'); }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased selection:bg-secondary-container selection:text-on-secondary-container overflow-x-hidden min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="bg-surface/80 dark:bg-surface-container-lowest/80 backdrop-blur-md fixed top-0 w-full z-50 border-b border-outline-variant/30 dark:border-outline-variant/10 shadow-sm transition-all duration-200 ease-in-out">
+<div class="flex justify-between items-center h-16 px-container-padding max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<img alt="ZoneDrop Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XBoSf_MSz_GGdmbpO7ik9Eiob0VyXzGw-CR75VJT4kt4NsEFI7rOhujnd2F3tX4A9cBIfdvfxAygAVP6vs1c77MopaU7-5Q86SU2FL6CRZOvBDAkKwARy-zTDUFEpfeeWqNIlvIgljWuV5davXPYosEGyAfb4hoGIWpprb3vjF9Hf-KZq6RSM6Y1MWi91fkyTVJUherR-q4ONoEtsIokmEzyLF0xKz-JZweIKUAWyQxT5-z5iJ8T7JH0Y">
+<span class="text-headline-md font-headline-md font-bold text-on-surface dark:text-on-surface hidden sm:block">ZoneDrop</span>
+</div>
+<div class="hidden md:flex space-x-8">
+<a class="text-on-surface-variant dark:text-on-surface-variant font-medium hover:text-secondary dark:hover:text-secondary-fixed transition-colors" href="#">Features</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-medium hover:text-secondary dark:hover:text-secondary-fixed transition-colors" href="#">How It Works</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-medium hover:text-secondary dark:hover:text-secondary-fixed transition-colors" href="#">Solutions</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-medium hover:text-secondary dark:hover:text-secondary-fixed transition-colors" href="#">Pricing</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-medium hover:text-secondary dark:hover:text-secondary-fixed transition-colors" href="#">About</a>
+</div>
+<div class="flex items-center gap-4">
+<a class="font-label-md text-label-md font-medium text-on-surface-variant hover:text-secondary transition-colors hidden sm:block" href="#">Log in</a>
+<a class="bg-secondary text-on-primary px-4 py-2 rounded-lg font-label-md text-label-md font-medium hover:bg-secondary-container hover:text-on-secondary-container transition-colors shadow-sm" href="#">Get Started</a>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow pt-24 pb-16">
+<!-- Hero Section -->
+<section class="max-w-7xl mx-auto px-container-padding pt-16 pb-24 lg:pt-24 lg:pb-32 relative">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-stack-lg items-center">
+<div class="z-10">
+<h1 class="font-display-lg text-display-lg text-on-surface mb-stack-md">Your last mile, delivered smarter.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg max-w-xl">
+                        ZoneDrop simplifies last-mile delivery with intelligent pricing, smart agent assignment, real-time tracking, and seamless customer communication.
+                    </p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-secondary text-on-primary px-6 py-3 rounded-lg font-label-md text-label-md font-medium hover:bg-secondary-container hover:text-on-secondary-container transition-colors shadow-sm flex items-center gap-2">
+                            Get Started <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_forward</span>
+</button>
+<button class="border border-outline text-on-surface px-6 py-3 rounded-lg font-label-md text-label-md font-medium hover:bg-surface-variant transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">play_circle</span> Watch Demo
+                        </button>
+</div>
+<!-- Stats Section within Hero -->
+<div class="mt-stack-lg pt-stack-md border-t border-outline-variant/30 flex flex-wrap gap-8">
+<div>
+<p class="font-headline-md text-headline-md text-secondary mb-1">98.4%</p>
+<p class="font-label-md text-label-md text-on-surface-variant">On-Time</p>
+</div>
+<div>
+<p class="font-headline-md text-headline-md text-secondary mb-1">24/7</p>
+<p class="font-label-md text-label-md text-on-surface-variant">Tracking</p>
+</div>
+<div>
+<p class="font-headline-md text-headline-md text-secondary mb-1">Smart</p>
+<p class="font-label-md text-label-md text-on-surface-variant">Assignment</p>
+</div>
+</div>
+</div>
+<div class="relative z-10 w-full h-[400px] lg:h-[500px] rounded-xl overflow-hidden shadow-[0px_12px_48px_rgba(11,18,33,0.12)] border border-outline-variant/20 bg-surface">
+<!-- Dashboard Mockup Image -->
+<img class="w-full h-full object-cover" data-alt="A detailed high-fidelity UI mockup of a modern logistics dashboard displayed on a desktop screen. The UI features a large central city map with sharp, glowing blue route lines connecting pickup and drop-off markers. The design is sleek, using a light mode aesthetic with deep navy and electric blue accents. Floating glassmorphism cards display statistics like '98.4% On-Time' and '124 Today's Deliveries' over the map. Clean, professional B2B SaaS look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0H7Sa-JvDTqmN8TEoDCcI0pVPP39qHe-8SJFrVI7RgfxDhlx8NLV3PcCB4WVmBFiJk8p3l8dpcx5Opsaq1eJFNDN3BvGbRA24_69wJDNns2H4OEoO_JjX2CDTrR2etKeMlT8eafFFhhZEopitkdP1Iyj_QOjG-QvvtQXLcJ4QOY6xDBuBjxo6fmD4bV0wvm0BF3znxJqIlkxElvmnV8KwmaO0b2rIOAYVJV-dU9bhOwr0rgi_M5PSlw">
+</div>
+</div>
+</section>
+<!-- Core Features Section -->
+<section class="bg-surface-container-low py-24">
+<div class="max-w-7xl mx-auto px-container-padding">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">Core Platform Capabilities</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Built for high-performance logistics operations requiring precision and speed.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Feature 1 -->
+<div class="bg-surface p-stack-lg rounded-xl border border-outline-variant/30 shadow-sm hover:shadow-[0px_4px_20px_rgba(11,18,33,0.05)] transition-shadow">
+<div class="w-12 h-12 rounded-lg bg-surface-variant text-secondary flex items-center justify-center mb-stack-md">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calculate</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Smart Pricing</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Automatically calculate delivery charges dynamically using advanced weight metrics and intelligent zone mapping.</p>
+</div>
+<!-- Feature 2 -->
+<div class="bg-surface p-stack-lg rounded-xl border border-outline-variant/30 shadow-sm hover:shadow-[0px_4px_20px_rgba(11,18,33,0.05)] transition-shadow">
+<div class="w-12 h-12 rounded-lg bg-surface-variant text-secondary flex items-center justify-center mb-stack-md">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person_search</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Intelligent Assignment</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Utilize real-time location data for nearest available agent identification to minimize idle time and maximize efficiency.</p>
+</div>
+<!-- Feature 3 -->
+<div class="bg-surface p-stack-lg rounded-xl border border-outline-variant/30 shadow-sm hover:shadow-[0px_4px_20px_rgba(11,18,33,0.05)] transition-shadow">
+<div class="w-12 h-12 rounded-lg bg-surface-variant text-secondary flex items-center justify-center mb-stack-md">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">map</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Real-Time Tracking</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Provide complete operational visibility with sub-second latency from initial package pickup to final doorstep delivery.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- How It Works Section -->
+<section class="py-24 max-w-7xl mx-auto px-container-padding">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">How It Works</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">A seamless four-step process to optimize your delivery workflow.</p>
+</div>
+<div class="relative">
+<!-- Connecting Line for Desktop -->
+<div class="hidden md:block absolute top-1/2 left-0 w-full h-[2px] bg-outline-variant/30 -translate-y-1/2 z-0"></div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
+<!-- Step 1 -->
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-secondary text-on-primary flex items-center justify-center font-headline-md text-headline-md mb-4 shadow-sm border-4 border-surface">
+                            1
+                        </div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Create Order</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant px-4">Input delivery details via API or dashboard.</p>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-surface-variant text-secondary flex items-center justify-center font-headline-md text-headline-md mb-4 shadow-sm border-4 border-surface">
+                            2
+                        </div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Get Smart Pricing</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant px-4">Instant cost calculation based on variables.</p>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-surface-variant text-secondary flex items-center justify-center font-headline-md text-headline-md mb-4 shadow-sm border-4 border-surface">
+                            3
+                        </div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Assign &amp; Track</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant px-4">Automated routing and real-time monitoring.</p>
+</div>
+<!-- Step 4 -->
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-surface-variant text-secondary flex items-center justify-center font-headline-md text-headline-md mb-4 shadow-sm border-4 border-surface">
+                            4
+                        </div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Deliver</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant px-4">Successful completion with proof of delivery.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-primary-container w-full py-stack-lg border-t border-outline-variant/20 flat no shadows">
+<div class="grid grid-cols-2 md:grid-cols-5 gap-gutter px-container-padding max-w-7xl mx-auto">
+<div class="col-span-2 md:col-span-1 flex flex-col gap-4">
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-on-primary-fixed">ZoneDrop</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 ZoneDrop Logistics Intelligence. All rights reserved.</p>
+</div>
+<div class="flex flex-col gap-2">
+<a class="font-body-sm text-body-sm text-on-surface-variant dark:text-on-primary-container hover:text-secondary dark:hover:text-secondary-fixed underline transition-all opacity-80 hover:opacity-100" href="#">Product</a>
+</div>
+<div class="flex flex-col gap-2">
+<a class="font-body-sm text-body-sm text-on-surface-variant dark:text-on-primary-container hover:text-secondary dark:hover:text-secondary-fixed underline transition-all opacity-80 hover:opacity-100" href="#">Company</a>
+</div>
+<div class="flex flex-col gap-2">
+<a class="font-body-sm text-body-sm text-on-surface-variant dark:text-on-primary-container hover:text-secondary dark:hover:text-secondary-fixed underline transition-all opacity-80 hover:opacity-100" href="#">Resources</a>
+</div>
+<div class="flex flex-col gap-2">
+<a class="font-body-sm text-body-sm text-on-surface-variant dark:text-on-primary-container hover:text-secondary dark:hover:text-secondary-fixed underline transition-all opacity-80 hover:opacity-100" href="#">Legal</a>
+</div>
+</div>
+</footer>
+</body></html>

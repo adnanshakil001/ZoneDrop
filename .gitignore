@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+dist/
+
+# Environment Variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Editor/IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.cursor/
+.agents/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Project Specific
+backend/node_modules/
+backend/dist/
+frontend/node_modules/
+frontend/dist/

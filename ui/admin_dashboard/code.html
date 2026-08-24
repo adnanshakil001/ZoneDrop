@@ -1,0 +1,446 @@
+<!DOCTYPE html><html lang="en"><svg class="inline-defs-container" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"></svg><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>ZoneDrop Logistics Intelligence - Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "surface-container-highest": "#d3e4fe",
+                "tertiary-container": "#001f26",
+                "primary-container": "#151b2b",
+                "on-error-container": "#93000a",
+                "on-secondary-fixed": "#001a42",
+                "surface-container-low": "#eff4ff",
+                "on-background": "#0b1c30",
+                "on-primary": "#ffffff",
+                "on-tertiary": "#ffffff",
+                "on-surface": "#0b1c30",
+                "error-container": "#ffdad6",
+                "outline": "#76777d",
+                "surface-tint": "#575e70",
+                "surface-dim": "#cbdbf5",
+                "secondary": "#0058be",
+                "outline-variant": "#c6c6cd",
+                "surface-bright": "#f8f9ff",
+                "on-primary-fixed": "#151b2b",
+                "on-secondary-fixed-variant": "#004395",
+                "inverse-primary": "#c0c6db",
+                "on-primary-container": "#7d8497",
+                "on-error": "#ffffff",
+                "primary": "#000000",
+                "inverse-surface": "#213145",
+                "surface-container-high": "#dce9ff",
+                "inverse-on-surface": "#eaf1ff",
+                "secondary-fixed": "#d8e2ff",
+                "on-secondary": "#ffffff",
+                "background": "#f8f9ff",
+                "error": "#ba1a1a",
+                "on-primary-fixed-variant": "#404758",
+                "primary-fixed-dim": "#c0c6db",
+                "on-tertiary-container": "#0090a9",
+                "on-secondary-container": "#fefcff",
+                "tertiary": "#000000",
+                "secondary-container": "#2170e4",
+                "tertiary-fixed-dim": "#4cd7f6",
+                "surface-container": "#e5eeff",
+                "surface": "#f8f9ff",
+                "on-tertiary-fixed": "#001f26",
+                "surface-variant": "#d3e4fe",
+                "on-surface-variant": "#45464c",
+                "on-tertiary-fixed-variant": "#004e5c",
+                "primary-fixed": "#dce2f8",
+                "surface-container-lowest": "#ffffff",
+                "tertiary-fixed": "#acedff",
+                "secondary-fixed-dim": "#adc6ff"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "stack-md": "16px",
+                "stack-lg": "32px",
+                "stack-sm": "8px",
+                "unit": "4px",
+                "container-padding": "24px",
+                "gutter": "16px"
+        },
+        "fontFamily": {
+                "headline-lg": [
+                        "Geist"
+                ],
+                "body-lg": [
+                        "Geist"
+                ],
+                "headline-md": [
+                        "Geist"
+                ],
+                "headline-sm": [
+                        "Geist"
+                ],
+                "display-lg": [
+                        "Geist"
+                ],
+                "label-md": [
+                        "Geist"
+                ],
+                "body-md": [
+                        "Geist"
+                ],
+                "mono-data": [
+                        "JetBrains Mono"
+                ],
+                "body-sm": [
+                        "Geist"
+                ]
+        },
+        "fontSize": {
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "40px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-sm": [
+                        "20px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "display-lg": [
+                        "48px",
+                        {
+                                "lineHeight": "56px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "label-md": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.02em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "mono-data": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "fontWeight": "500"
+                        }
+                ],
+                "body-sm": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "fontWeight": "400"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+    body { font-family: 'Geist', sans-serif; }
+    .font-mono-data { font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex">
+<!-- NavigationDrawer -->
+<aside class="hidden md:flex flex-col border-r border-outline-variant bg-surface-container-low h-screen w-64 fixed left-0 top-0 z-40">
+<div class="p-container-padding flex items-center gap-3 border-b border-outline-variant">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-headline-sm">OM</div>
+<div>
+<h2 class="font-label-md text-label-md font-bold text-on-surface">Operations Manager</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Zone Alpha-7</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto py-stack-md flex flex-col gap-unit px-2">
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container rounded-lg mx-2 transition-colors duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+            Overview
+        </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-lg mx-2 transition-colors duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">package_2</span>
+            Deliveries
+        </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-lg mx-2 transition-colors duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person_pin_circle</span>
+            Agents
+        </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-lg mx-2 transition-colors duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">monitoring</span>
+            Analytics
+        </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-lg mx-2 transition-colors duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+            Settings
+        </a>
+</nav>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 md:ml-64 flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 flex items-center justify-between px-container-padding h-16 w-full max-w-full bg-surface shadow-sm border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<div class="md:hidden">
+<span class="material-symbols-outlined text-secondary cursor-pointer" style="font-variation-settings: 'FILL' 0;">menu</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary font-headline-lg text-headline-lg" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+<span class="font-headline-md text-headline-md font-black text-secondary tracking-tight">ZoneDrop</span>
+</div>
+</div>
+<div class="flex-1 max-w-xl mx-8 hidden lg:block">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-full pl-10 pr-4 py-2 text-body-sm font-body-sm focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all" placeholder="Search orders, agents, or zones..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant shadow-[0_4px_20px_rgba(11,18,33,0.05)]">
+<span class="w-2 h-2 rounded-full bg-[#10B981] animate-pulse"></span>
+<span class="font-label-md text-label-md text-on-surface">Live</span>
+</div>
+<div class="relative cursor-pointer hover:text-secondary transition-colors text-on-surface-variant scale-95 active:opacity-80">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+<span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-error rounded-full border-2 border-surface"></span>
+</div>
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-label-md text-label-md font-bold cursor-pointer hover:bg-secondary transition-colors">OM</div>
+</div>
+</header>
+<div class="p-container-padding flex flex-col gap-stack-lg flex-1">
+<!-- Top Stats Row -->
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-gutter">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-[0_4px_20px_rgba(11,18,33,0.05)] flex flex-col gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Total Orders</span>
+<span class="font-headline-lg text-headline-lg text-on-surface">1,284</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-[0_4px_20px_rgba(11,18,33,0.05)] flex flex-col gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Active Deliveries</span>
+<span class="font-headline-lg text-headline-lg text-secondary">42</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-[0_4px_20px_rgba(11,18,33,0.05)] flex flex-col gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Delivered Today</span>
+<span class="font-headline-lg text-headline-lg text-[#10B981]">156</span>
+</div>
+<div class="bg-surface-container-lowest border border-error-container rounded-xl p-4 shadow-[0_4px_20px_rgba(11,18,33,0.05)] flex flex-col gap-2 bg-error-container/10">
+<span class="font-label-md text-label-md text-error uppercase tracking-wider">Failed Deliveries</span>
+<span class="font-headline-lg text-headline-lg text-error">3</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-[0_4px_20px_rgba(11,18,33,0.05)] flex flex-col gap-2 col-span-2 md:col-span-1">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Revenue</span>
+<span class="font-headline-lg text-headline-lg text-on-surface font-mono-data">₹42,500</span>
+</div>
+</div>
+<!-- Main Area (Two Columns) -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter min-h-[500px]">
+<!-- Left Column: Map -->
+<div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-[0_4px_20px_rgba(11,18,33,0.05)] overflow-hidden relative flex flex-col">
+<div class="px-4 py-3 border-b border-outline-variant bg-surface-container-lowest/90 backdrop-blur-sm z-10 flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Live Zone Map</h3>
+<div class="flex gap-2">
+<button class="p-1.5 rounded-md hover:bg-surface-variant text-on-surface-variant transition-colors"><span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 0;">filter_list</span></button>
+<button class="p-1.5 rounded-md hover:bg-surface-variant text-on-surface-variant transition-colors"><span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 0;">fullscreen</span></button>
+</div>
+</div>
+<div class="flex-1 relative bg-surface-dim">
+<img class="absolute inset-0 w-full h-full object-cover opacity-80 mix-blend-multiply" data-alt="A highly detailed, professional digital map visualization of a metropolitan area in a light mode SaaS dashboard style. The map features subtle, muted grays and whites for roads and terrain, with distinct geometric overlays representing delivery zones in transparent shades of blue and cyan. Tiny, sharp truck icons and pulsing location markers are scattered across the grid, conveying real-time logistics tracking. The lighting is flat and clean, emphasizing functional data display." data-location="Mumbai" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCEfY8NWPR1zuP456xG-RAetYs-FKDgZ7rB2xUvl0tFpnuISpfA-HlqCMK0_YWFEF1J2gEko2xZdTjjCgwTIdM5t5ApPNyZPGy12KXHnnLIPtv4AzrLoj3qAWMCthg93FuXArigQvnZ6oak7ndEwO-uSgTryQfQ4r8hVdkTzp3v4gaifDkPF8LC5QDGxHspOC4t5iXq8T73kDdfk-yb1Gbreb2CEpB0E48uosO6obaI1c4zpXeP5LMKg">
+<!-- Overlay Elements -->
+<div class="absolute inset-0 pointer-events-none">
+<!-- SVG Grid/Zones Mock -->
+<svg class="w-full h-full opacity-30" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="40" id="grid" patternUnits="userSpaceOnUse" width="40">
+<path d="M 40 0 L 0 0 0 40" fill="none" stroke="#7d8497" stroke-width="0.5"></path>
+</pattern>
+</defs>
+<rect fill="url(#grid)" height="100%" width="100%"></rect>
+<!-- Simulated Zone Borders -->
+<path d="M100,100 L300,50 L400,200 L200,300 Z" fill="rgba(0, 88, 190, 0.1)" stroke="#0058be" stroke-dasharray="4,4" stroke-width="2"></path>
+<text fill="#001a42" font-family="Geist" font-size="14" font-weight="bold" x="220" y="180">ZONE A</text>
+<path d="M400,200 L600,150 L700,350 L450,400 Z" fill="rgba(76, 215, 246, 0.1)" stroke="#4cd7f6" stroke-dasharray="4,4" stroke-width="2"></path>
+<text fill="#001a42" font-family="Geist" font-size="14" font-weight="bold" x="520" y="280">ZONE B</text>
+</svg>
+<!-- Floating Card -->
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-surface-container-lowest p-3 rounded-lg shadow-[0_12px_48px_rgba(11,18,33,0.12)] border border-outline-variant pointer-events-auto flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+<div>
+<p class="font-label-md text-label-md font-bold text-on-surface">Zone B Active</p>
+<p class="font-body-sm text-body-sm text-secondary">12 orders</p>
+</div>
+</div>
+<!-- Markers -->
+<div class="absolute top-[30%] left-[25%]">
+<div class="w-6 h-6 bg-surface-container-lowest rounded-full shadow-md flex items-center justify-center border-2 border-secondary relative">
+<span class="material-symbols-outlined text-[14px] text-secondary" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+</div>
+</div>
+<div class="absolute top-[45%] left-[60%]">
+<div class="w-3 h-3 bg-[#10B981] rounded-full shadow-md relative">
+<div class="absolute inset-0 bg-[#10B981] rounded-full animate-ping opacity-75"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Live Feed -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-[0_4px_20px_rgba(11,18,33,0.05)] flex flex-col h-full max-h-[600px]">
+<div class="px-4 py-3 border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Live Operations Feed</h3>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" style="font-variation-settings: 'FILL' 0;">rss_feed</span>
+</div>
+<div class="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+<!-- Feed Item 1 -->
+<div class="flex gap-3 items-start">
+<div class="w-2 h-2 mt-2 rounded-full bg-secondary flex-shrink-0"></div>
+<div class="flex-1">
+<p class="font-body-sm text-body-sm text-on-surface"><span class="font-mono-data text-on-surface-variant text-[12px]">Order #ZD-10490</span> Assigned to J. Doe</p>
+<span class="font-label-md text-label-md text-on-surface-variant text-[10px]">Just now</span>
+</div>
+</div>
+<!-- Feed Item 2 -->
+<div class="flex gap-3 items-start">
+<div class="w-2 h-2 mt-2 rounded-full bg-[#10B981] flex-shrink-0"></div>
+<div class="flex-1">
+<p class="font-body-sm text-body-sm text-on-surface"><span class="font-mono-data text-on-surface-variant text-[12px]">Order #ZD-10488</span> Picked Up</p>
+<span class="font-label-md text-label-md text-on-surface-variant text-[10px]">2 mins ago</span>
+</div>
+</div>
+<!-- Feed Item 3 -->
+<div class="flex gap-3 items-start">
+<div class="w-2 h-2 mt-2 rounded-full bg-error flex-shrink-0"></div>
+<div class="flex-1">
+<p class="font-body-sm text-body-sm text-on-surface"><span class="font-mono-data text-on-surface-variant text-[12px]">Order #ZD-10475</span> Delivery Failed: Customer Unavailable</p>
+<span class="font-label-md text-label-md text-on-surface-variant text-[10px]">15 mins ago</span>
+</div>
+</div>
+<!-- Feed Item 4 -->
+<div class="flex gap-3 items-start">
+<div class="w-2 h-2 mt-2 rounded-full bg-secondary flex-shrink-0"></div>
+<div class="flex-1">
+<p class="font-body-sm text-body-sm text-on-surface"><span class="font-mono-data text-on-surface-variant text-[12px]">Zone C</span> High volume alert triggered</p>
+<span class="font-label-md text-label-md text-on-surface-variant text-[10px]">22 mins ago</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Recent Orders Table -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-[0_4px_20px_rgba(11,18,33,0.05)] overflow-hidden">
+<div class="px-4 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Recent Orders</h3>
+<button class="text-secondary font-label-md text-label-md hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="px-4 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider font-medium">Order ID</th>
+<th class="px-4 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider font-medium">Customer</th>
+<th class="px-4 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider font-medium">Destination</th>
+<th class="px-4 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider font-medium">Agent</th>
+<th class="px-4 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider font-medium">Status</th>
+<th class="px-4 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider font-medium text-right">Charge</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm">
+<tr class="border-b border-outline-variant hover:bg-surface-variant/50 transition-colors">
+<td class="px-4 py-3 font-mono-data text-secondary">#ZD-10490</td>
+<td class="px-4 py-3 text-on-surface">Acme Corp</td>
+<td class="px-4 py-3 text-on-surface-variant">Andheri East, Zone A</td>
+<td class="px-4 py-3 text-on-surface">J. Doe</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-secondary/10 text-secondary border border-secondary/20">Assigned</span>
+</td>
+<td class="px-4 py-3 text-right font-mono-data">₹450</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-variant/50 transition-colors">
+<td class="px-4 py-3 font-mono-data text-secondary">#ZD-10489</td>
+<td class="px-4 py-3 text-on-surface">TechLogix</td>
+<td class="px-4 py-3 text-on-surface-variant">Bandra West, Zone B</td>
+<td class="px-4 py-3 text-on-surface">S. Patel</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#F59E0B]/10 text-[#D97706] border border-[#F59E0B]/20">In Transit</span>
+</td>
+<td class="px-4 py-3 text-right font-mono-data">₹1,200</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-variant/50 transition-colors">
+<td class="px-4 py-3 font-mono-data text-secondary">#ZD-10488</td>
+<td class="px-4 py-3 text-on-surface">FreshMart</td>
+<td class="px-4 py-3 text-on-surface-variant">Powai, Zone C</td>
+<td class="px-4 py-3 text-on-surface">M. Singh</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#10B981]/10 text-[#059669] border border-[#10B981]/20">Delivered</span>
+</td>
+<td class="px-4 py-3 text-right font-mono-data">₹350</td>
+</tr>
+<tr class="hover:bg-surface-variant/50 transition-colors">
+<td class="px-4 py-3 font-mono-data text-secondary">#ZD-10475</td>
+<td class="px-4 py-3 text-on-surface">R. Kumar</td>
+<td class="px-4 py-3 text-on-surface-variant">Worli, Zone D</td>
+<td class="px-4 py-3 text-on-surface">A. Khan</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-error/10 text-error border border-error/20">Failed</span>
+</td>
+<td class="px-4 py-3 text-right font-mono-data">₹850</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 md:hidden bg-surface shadow-[0_-4px_20px_rgba(11,18,33,0.05)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 tap-highlight-transparent active:scale-95 transition-transform font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="mt-1">Overview</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant tap-highlight-transparent active:scale-95 transition-transform font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">package_2</span>
+<span class="mt-1">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant tap-highlight-transparent active:scale-95 transition-transform font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">monitoring</span>
+<span class="mt-1">Analytics</span>
+</a>
+</nav>
+</body></html>
