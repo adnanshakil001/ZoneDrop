@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { AuthenticateWithRedirectCallback } from "@clerk/clerk-react";
 import { homePath, useAuth } from "./auth";
 import { AdminPage } from "./pages/AdminPage";
 import { AgentPage } from "./pages/AgentPage";
@@ -20,6 +21,7 @@ function Guard({ roles, children }: { roles: Array<"CUSTOMER" | "AGENT" | "ADMIN
 export default function App() {
   return (
     <Routes>
+      <Route path="/sso-callback" element={<AuthenticateWithRedirectCallback signInForceRedirectUrl="/app" signUpForceRedirectUrl="/app" />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route

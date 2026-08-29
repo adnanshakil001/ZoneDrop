@@ -51,9 +51,10 @@ enum NotificationStatus {
 
 model User {
   id           String   @id @default(uuid())
+  clerkUserId  String?  @unique
   name         String
   email        String   @unique
-  passwordHash String
+  passwordHash String?
   role         Role
   phone        String?
   createdAt    DateTime @default(now())
@@ -135,7 +136,11 @@ model Order {
   createdByAdminId String?
   createdByAdmin   User?       @relation("AdminCreatedOrders", fields: [createdByAdminId], references: [id])
   pickupAddress    String
+  pickupLat        Float?
+  pickupLng        Float?
   dropAddress      String
+  dropLat          Float?
+  dropLng          Float?
   pickupPincode    String
   dropPincode      String
   pickupZoneId     String

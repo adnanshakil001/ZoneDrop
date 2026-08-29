@@ -16,7 +16,11 @@ const quoteSchema = z.object({
 
 const createSchema = quoteSchema.extend({
   pickupAddress: z.string().min(5),
+  pickupLat: z.number().optional(),
+  pickupLng: z.number().optional(),
   dropAddress: z.string().min(5),
+  dropLat: z.number().optional(),
+  dropLng: z.number().optional(),
   scheduledDate: z.string().min(8),
   customerId: z.string().uuid().optional(),
   autoAssign: z.boolean().optional(),
@@ -165,6 +169,25 @@ describe("Quote-First Order Pipeline", () => {
         scheduledDate: "2026-08-25T10:00:00.000Z",
       });
       expect(invalid.success).toBe(false);
+    });
+
+    it("accepts valid order creation payload with map coordinates", () => {
+      const valid = createSchema.safeParse({
+        pickupPincode: "110001",
+        dropPincode: "110021",
+        lengthCm: 20,
+        breadthCm: 15,
+        heightCm: 10,
+        actualWeight: 0.4,
+        orderType: "B2C",
+        paymentType: "COD",
+        pickupAddress: "42 Connaught Circle, New Delhi",
+        pickupLat: 28.6304,
+        pickupLng: 77.2177,
+        dropAddress: "15 Chanakyapuri Diplomatic Enclave",
+        scheduledDate: "2026-08-25T10:00:00.000Z",
+      });
+      expect(valid.success).toBe(true);
     });
   });
 });

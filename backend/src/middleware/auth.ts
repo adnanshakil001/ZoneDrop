@@ -1,3 +1,4 @@
+import { createClerkClient, verifyToken } from "@clerk/express";
 import { Role } from "@prisma/client";
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
@@ -24,16 +25,91 @@ export function signToken(user: AuthUser): string {
   return jwt.sign(user, secret, { expiresIn: (process.env.JWT_EXPIRES_IN ?? "7d") as jwt.SignOptions["expiresIn"] });
 }
 
+const clerkSecretKey = process.env.CLERK_SECRET_KEY;
+const clerkPublishableKey = process.env.CLERK_PUBLISHABLE_KEY;
+
+const clerkClient = clerkSecretKey
+  ? createClerkClient({
+      secretKey: clerkSecretKey,
+      publishableKey: clerkPublishableKey,
+    })
+  : null;
+
 export async function requireAuth(req: Request, res: Response, next: NextFunction) {
   const header = req.headers.authorization;
   if (!header?.startsWith("Bearer ")) {
     res.status(401).json({ error: "Missing token" });
     return;
   }
+
+  const rawToken = header.slice(7).trim();
+
+  // 1. Attempt Clerk Token Verification if configured
+  if (clerkSecretKey && !clerkSecretKey.includes("YOUR_SECRET_KEY")) {
+    try {
+      const claims = await verifyToken(rawToken, {
+        secretKey: clerkSecretKey,
+      });
+
+      if (claims && claims.sub) {
+        const clerkUserId = claims.sub;
+
+        // Find user by clerkUserId or email
+        let dbUser = await prisma.user.findUnique({
+          where: { clerkUserId },
+        });
+
+        if (!dbUser && clerkClient) {
+          // Fetch user details from Clerk to get email & name
+          const clerkUser = await clerkClient.users.getUser(clerkUserId);
+          const email = clerkUser.emailAddresses[0]?.emailAddress?.toLowerCase();
+          const name =
+            `${clerkUser.firstName ?? ""} ${clerkUser.lastName ?? ""}`.trim() ||
+            email?.split("@")[0] ||
+            "ZoneDrop Customer";
+
+          if (email) {
+            // Check if existing user by email
+            const existingByEmail = await prisma.user.findUnique({ where: { email } });
+            if (existingByEmail) {
+              dbUser = await prisma.user.update({
+                where: { id: existingByEmail.id },
+                data: { clerkUserId },
+              });
+            } else {
+              // JIT Provision new Customer
+              dbUser = await prisma.user.create({
+                data: {
+                  clerkUserId,
+                  email,
+                  name,
+                  role: "CUSTOMER",
+                },
+              });
+            }
+          }
+        }
+
+        if (dbUser) {
+          req.user = {
+            id: dbUser.id,
+            role: dbUser.role,
+            email: dbUser.email,
+            name: dbUser.name,
+          };
+          return next();
+        }
+      }
+    } catch {
+      // Not a valid Clerk token, fall through to custom JWT verification
+    }
+  }
+
+  // 2. Fallback: Verify legacy custom JWT token (for seeded demo accounts)
   try {
     const secret = process.env.JWT_SECRET;
     if (!secret) throw new Error("JWT_SECRET is not set");
-    const payload = jwt.verify(header.slice(7), secret) as AuthUser;
+    const payload = jwt.verify(rawToken, secret) as AuthUser;
     const user = await prisma.user.findUnique({ where: { id: payload.id } });
     if (!user) {
       res.status(401).json({ error: "User no longer exists" });
@@ -42,7 +118,7 @@ export async function requireAuth(req: Request, res: Response, next: NextFunctio
     req.user = { id: user.id, role: user.role, email: user.email, name: user.name };
     next();
   } catch {
-    res.status(401).json({ error: "Invalid token" });
+    res.status(401).json({ error: "Invalid or expired token" });
   }
 }
 

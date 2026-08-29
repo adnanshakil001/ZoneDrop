@@ -2,6 +2,8 @@ import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { api } from "../api";
 import { Button, Card, Field, inputClass, Shell } from "../components/ui";
+import { LocationPickerMap } from "../components/LocationPickerMap";
+import { GeocodeResult } from "../lib/geocode";
 
 type Quote = {
   total: number;
@@ -20,8 +22,12 @@ type Quote = {
 const initialForm = {
   pickupAddress: "12 Connaught Place, New Delhi",
   pickupPincode: "110001",
+  pickupLat: undefined as number | undefined,
+  pickupLng: undefined as number | undefined,
   dropAddress: "88 Diplomatic Enclave, Chanakyapuri",
   dropPincode: "110021",
+  dropLat: undefined as number | undefined,
+  dropLng: undefined as number | undefined,
   lengthCm: 25,
   breadthCm: 20,
   heightCm: 15,
@@ -38,6 +44,8 @@ export function NewOrderPage() {
   const [loadingQuote, setLoadingQuote] = useState(false);
   const [bookingOrder, setBookingOrder] = useState(false);
   const [error, setError] = useState("");
+  const [pickMode, setPickMode] = useState<"type" | "map">("type");
+  const [dropMode, setDropMode] = useState<"type" | "map">("type");
 
   const liveVolumetric = Number(
     ((Number(form.lengthCm) * Number(form.breadthCm) * Number(form.heightCm)) / 5000).toFixed(2)
@@ -114,7 +122,24 @@ export function NewOrderPage() {
             </div>
 
             <div className="space-y-3">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-sm font-medium text-slate-300">Pickup Origin</span>
+                <div className="flex bg-surface-container rounded-md p-1 border border-outline-variant">
+                  <button type="button" onClick={() => setPickMode("type")} className={`text-[10px] uppercase font-bold px-2 py-1 rounded ${pickMode === "type" ? "bg-secondary text-on-secondary" : "text-on-surface-variant hover:text-white"}`}>Type Manually</button>
+                  <button type="button" onClick={() => setPickMode("map")} className={`text-[10px] uppercase font-bold px-2 py-1 rounded ${pickMode === "map" ? "bg-secondary text-on-secondary" : "text-on-surface-variant hover:text-white"}`}>Pick on Map</button>
+                </div>
+              </div>
+              
+              {pickMode === "map" && (
+                <div className="mb-3">
+                  <LocationPickerMap
+                    label="Drop Pin for Pickup"
+                    onSelect={(res: GeocodeResult) => setForm({ ...form, pickupAddress: res.address, pickupPincode: res.pincode || form.pickupPincode, pickupLat: res.lat, pickupLng: res.lng })}
+                  />
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
                 <div className="sm:col-span-2">
                   <Field label="Pickup Street Address">
                     <input
@@ -138,6 +163,23 @@ export function NewOrderPage() {
                   </Field>
                 </div>
               </div>
+
+              <div className="flex items-center justify-between mb-1 pt-4 border-t border-outline-variant/40">
+                <span className="text-sm font-medium text-slate-300">Drop Destination</span>
+                <div className="flex bg-surface-container rounded-md p-1 border border-outline-variant">
+                  <button type="button" onClick={() => setDropMode("type")} className={`text-[10px] uppercase font-bold px-2 py-1 rounded ${dropMode === "type" ? "bg-secondary text-on-secondary" : "text-on-surface-variant hover:text-white"}`}>Type Manually</button>
+                  <button type="button" onClick={() => setDropMode("map")} className={`text-[10px] uppercase font-bold px-2 py-1 rounded ${dropMode === "map" ? "bg-secondary text-on-secondary" : "text-on-surface-variant hover:text-white"}`}>Pick on Map</button>
+                </div>
+              </div>
+
+              {dropMode === "map" && (
+                <div className="mb-3">
+                  <LocationPickerMap
+                    label="Drop Pin for Destination"
+                    onSelect={(res: GeocodeResult) => setForm({ ...form, dropAddress: res.address, dropPincode: res.pincode || form.dropPincode, dropLat: res.lat, dropLng: res.lng })}
+                  />
+                </div>
+              )}
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="sm:col-span-2">

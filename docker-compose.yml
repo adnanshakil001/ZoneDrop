@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: lastmile
+      POSTGRES_PASSWORD: lastmile
+      POSTGRES_DB: lastmile
+    ports:
+      - "5432:5432"
+    volumes:
+      - lastmile_pg:/var/lib/postgresql/data
+
+volumes:
+  lastmile_pg:

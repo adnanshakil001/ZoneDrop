@@ -29,7 +29,11 @@ const quoteSchema = z.object({
 
 const createSchema = quoteSchema.extend({
   pickupAddress: z.string().min(5),
+  pickupLat: z.number().optional(),
+  pickupLng: z.number().optional(),
   dropAddress: z.string().min(5),
+  dropLat: z.number().optional(),
+  dropLng: z.number().optional(),
   scheduledDate: z.string().min(8),
   customerId: z.string().uuid().optional(),
   autoAssign: z.boolean().optional(),
@@ -133,7 +137,11 @@ ordersRouter.post("/", requireRole("CUSTOMER", "ADMIN"), async (req, res) => {
         customerId,
         createdByAdminId: actor.role === "ADMIN" ? actor.id : null,
         pickupAddress: parsed.data.pickupAddress,
+        pickupLat: parsed.data.pickupLat,
+        pickupLng: parsed.data.pickupLng,
         dropAddress: parsed.data.dropAddress,
+        dropLat: parsed.data.dropLat,
+        dropLng: parsed.data.dropLng,
         pickupPincode: parsed.data.pickupPincode,
         dropPincode: parsed.data.dropPincode,
         pickupZoneId: breakdown.pickupZone.id,

@@ -69,7 +69,7 @@ export function LandingPage() {
             
             <img 
               className="w-full rounded-lg object-cover shadow-sm border border-surface-variant/50 h-[500px]" 
-              src="/dashboard_mockup.jpg"
+              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop"
               alt="Dashboard Preview"
             />
 

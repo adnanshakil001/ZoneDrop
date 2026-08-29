@@ -2,13 +2,8 @@ import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { homePath, useAuth } from "../auth";
 
-/**
- * LoginPage — pixel-perfect match to ui/login_desktop/screen.png
- * Split-screen: left hero with logistics image + "Precision. Delivered.",
- * right side form card with "Welcome Back" heading.
- */
 export function LoginPage() {
-  const { login } = useAuth();
+  const { login, signInWithGoogle } = useAuth();
   const nav = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,15 +28,20 @@ export function LoginPage() {
     await handleLogin(email, password);
   }
 
-  function quickFill(eMail: string, pWord: string = "password123") {
-    setEmail(eMail);
-    setPassword(pWord);
-    void handleLogin(eMail, pWord);
+  async function handleGoogleLogin() {
+    setError("");
+    setLoading(true);
+    try {
+      await signInWithGoogle();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Google sign-in failed");
+      setLoading(false);
+    }
   }
 
   return (
     <main className="flex w-full min-h-screen bg-surface text-on-surface font-body-md">
-      {/* Left Side: Hero / Brand Area */}
+      {/* Left Side: Hero Area */}
       <section className="hidden lg:flex lg:w-1/2 relative bg-[#0b1120] overflow-hidden">
         {/* Logistics Themed Background Image */}
         <div
@@ -149,7 +149,7 @@ export function LoginPage() {
 
               {/* Login Button */}
               <button
-                className="w-full py-3 px-4 bg-secondary text-on-secondary font-label-md text-label-md rounded-lg shadow-sm hover:bg-secondary-container focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-surface-container-lowest transition-all active:scale-[0.98]"
+                className="w-full py-3 px-4 bg-secondary text-on-secondary font-label-md text-label-md rounded-lg shadow-sm hover:bg-secondary-container focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-surface-container-lowest transition-all active:scale-[0.98] cursor-pointer"
                 type="submit"
                 disabled={loading}
               >
@@ -165,7 +165,12 @@ export function LoginPage() {
             </div>
 
             {/* Social Login */}
-            <button className="w-full py-3 px-4 bg-surface-container-lowest border border-outline-variant text-on-surface font-label-md text-label-md rounded-lg shadow-sm hover:bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-outline-variant transition-all active:scale-[0.98] flex items-center justify-center gap-2">
+            <button
+              type="button"
+              onClick={() => void handleGoogleLogin()}
+              disabled={loading}
+              className="w-full py-3 px-4 bg-surface-container-lowest border border-outline-variant text-on-surface font-label-md text-label-md rounded-lg shadow-sm hover:bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-outline-variant transition-all active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+            >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />

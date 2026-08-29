@@ -139,9 +139,9 @@ export function CustomerHome() {
         {/* Map Area */}
         <div className="lg:col-span-2 bg-surface rounded-xl border border-outline-variant shadow-sm overflow-hidden h-[400px] relative">
           <img
-            className="w-full h-full object-cover"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvZEGhvXIQ3DkRQ4outlQcvoDdQTMfpV5j10MSUAf5jRbwNTS3vfy01v0VbPl0UCHkdiLku84ZGJbl03IUP6EYajhKPzoPjmbuCtTrnDOPoI3zFtWBoMM46DCoBX-eNALeq4km7OgmMHazjUJDMQUxy4TFrxG3WL6tetGfuRLVf4F-e2dUQzkfYF_mCeqAc0MDOnfBzL9kkQwZinhczghTx7AlbioCpDd4SNYZF3HXt6ytbehkfxUzaw"
-            alt="Logistics map"
+            className="w-full h-full object-cover opacity-80 mix-blend-luminosity"
+            src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2074&auto=format&fit=crop"
+            alt="Logistics routing map"
           />
           {/* Map Overlay UI */}
           {latestActive && (
@@ -160,38 +160,65 @@ export function CustomerHome() {
         <div className="bg-surface rounded-xl border border-outline-variant shadow-sm p-stack-md flex flex-col h-[400px]">
           <h3 className="font-headline-sm text-headline-sm font-semibold mb-stack-md border-b border-outline-variant/30 pb-2">Tracking Status</h3>
           <div className="flex-1 overflow-y-auto pr-2">
-            <div className="relative border-l-2 border-[#0058be] ml-3 mt-2 space-y-6">
-              {/* Step 1 (Completed) */}
-              <div className="relative pl-6">
-                <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-[#0058be] border-2 border-surface flex items-center justify-center">
-                  <span className="material-symbols-outlined text-[10px] text-on-secondary font-bold">check</span>
-                </div>
-                <p className="font-label-md text-label-md font-bold text-on-surface">Order Processing</p>
-                <p className="font-body-sm text-body-sm text-on-surface-variant">08:00 AM - Hub Alpha</p>
+            {!latestActive ? (
+              <div className="flex h-full items-center justify-center text-on-surface-variant text-body-sm">
+                No active orders to track.
               </div>
-              {/* Step 2 (Completed) */}
-              <div className="relative pl-6">
-                <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-[#0058be] border-2 border-surface flex items-center justify-center">
-                  <span className="material-symbols-outlined text-[10px] text-on-secondary font-bold">check</span>
-                </div>
-                <p className="font-label-md text-label-md font-bold text-on-surface">In Transit to Facility</p>
-                <p className="font-body-sm text-body-sm text-on-surface-variant">10:15 AM - Regional Route 4</p>
+            ) : (
+              <div className="relative border-l-2 border-[#0058be] ml-3 mt-2 space-y-6">
+                {[
+                  { id: "processing", label: "Order Processing", statuses: ["CREATED", "ASSIGNED"] },
+                  { id: "transit", label: "In Transit to Facility", statuses: ["PICKED_UP", "IN_TRANSIT"] },
+                  { id: "ofd", label: "Out for Delivery", statuses: ["OUT_FOR_DELIVERY"] },
+                  { id: "delivered", label: "Delivered", statuses: ["DELIVERED"] }
+                ].map((step, idx, arr) => {
+                  const statusOrder = ["CREATED", "ASSIGNED", "PICKED_UP", "IN_TRANSIT", "OUT_FOR_DELIVERY", "DELIVERED"];
+                  const currentIdx = statusOrder.indexOf(latestActive.status);
+                  const stepStartIdx = statusOrder.indexOf(step.statuses[0]);
+                  
+                  let state = "upcoming";
+                  if (currentIdx >= stepStartIdx && currentIdx <= statusOrder.indexOf(step.statuses[step.statuses.length - 1])) {
+                    state = "current";
+                  } else if (currentIdx > statusOrder.indexOf(step.statuses[step.statuses.length - 1])) {
+                    state = "completed";
+                  }
+
+                  return (
+                    <div key={step.id} className="relative pl-6">
+                      {state === "completed" && (
+                        <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-[#0058be] border-2 border-surface flex items-center justify-center">
+                          <span className="material-symbols-outlined text-[10px] text-on-secondary font-bold">check</span>
+                        </div>
+                      )}
+                      {state === "current" && (
+                        <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-surface border-2 border-[#0058be] flex items-center justify-center">
+                          <div className="w-1.5 h-1.5 bg-[#0058be] rounded-full animate-pulse" />
+                        </div>
+                      )}
+                      {state === "upcoming" && (
+                        <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-surface border-2 border-outline-variant" />
+                      )}
+                      
+                      <p className={`font-label-md text-label-md font-bold ${state === "current" ? "text-[#0058be]" : state === "completed" ? "text-on-surface" : "text-on-surface-variant"}`}>
+                        {step.label}
+                      </p>
+                      
+                      {state === "completed" && (
+                        <p className="font-body-sm text-body-sm text-on-surface-variant">Completed</p>
+                      )}
+                      {state === "current" && (
+                        <p className="font-body-sm text-body-sm text-on-surface-variant">
+                          In Progress {latestActive.assignedAgent ? `- Agent: ${latestActive.assignedAgent.name}` : ""}
+                        </p>
+                      )}
+                      {state === "upcoming" && (
+                        <p className="font-body-sm text-body-sm text-on-surface-variant">Pending</p>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
-              {/* Step 3 (Current) */}
-              <div className="relative pl-6">
-                <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-surface border-2 border-[#0058be] flex items-center justify-center">
-                  <div className="w-1.5 h-1.5 bg-[#0058be] rounded-full animate-pulse" />
-                </div>
-                <p className="font-label-md text-label-md font-bold text-[#0058be]">Out for Delivery</p>
-                <p className="font-body-sm text-body-sm text-on-surface-variant">13:45 PM - Agent: Mike T.</p>
-              </div>
-              {/* Step 4 (Upcoming) */}
-              <div className="relative pl-6">
-                <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-surface border-2 border-outline-variant" />
-                <p className="font-label-md text-label-md font-bold text-on-surface-variant">Delivered</p>
-                <p className="font-body-sm text-body-sm text-on-surface-variant">Pending</p>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
