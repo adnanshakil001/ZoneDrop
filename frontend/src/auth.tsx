@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import { useAuth as useClerkAuth, useClerk, useSignIn } from "@clerk/clerk-react";
+import { useAuth as useClerkAuth, useClerk, useSignIn, useUser } from "@clerk/clerk-react";
 import { api, getToken, setToken, setTokenGetter } from "./api";
 
 export type User = {
@@ -31,7 +31,8 @@ const clerkPublishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 const isClerkEnabled = clerkPublishableKey && !clerkPublishableKey.includes("YOUR_PUBLISHABLE_KEY");
 
 function ClerkConnectedAuthProvider({ children }: { children: ReactNode }) {
-  const { isSignedIn, isLoaded, getToken: getClerkToken } = useClerkAuth();
+  const { isSignedIn, isLoaded: isAuthLoaded, getToken: getClerkToken } = useClerkAuth();
+  const { user: clerkUser, isLoaded: isUserLoaded } = useUser();
   const { signOut } = useClerk();
   const { signIn } = useSignIn();
 
@@ -53,8 +54,23 @@ function ClerkConnectedAuthProvider({ children }: { children: ReactNode }) {
   async function refresh() {
     try {
       if (isSignedIn) {
-        const me = await api<User>("/api/auth/me");
-        setUser(me);
+        try {
+          const me = await api<User>("/api/auth/me");
+          setUser(me);
+        } catch (apiErr) {
+          console.warn("Backend auth/me sync delayed or failed, using Clerk profile fallback:", apiErr);
+          // If backend is sleeping (e.g. Render free tier cold start), provision client-side Customer user
+          if (clerkUser) {
+            setUser({
+              id: clerkUser.id,
+              name: clerkUser.fullName || clerkUser.primaryEmailAddress?.emailAddress?.split("@")[0] || "Customer",
+              email: clerkUser.primaryEmailAddress?.emailAddress || "",
+              role: "CUSTOMER",
+            });
+          } else {
+            setUser(null);
+          }
+        }
       } else if (getToken()) {
         const me = await api<User>("/api/auth/me");
         setUser(me);
@@ -69,10 +85,10 @@ function ClerkConnectedAuthProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
-    if (isLoaded) {
+    if (isAuthLoaded && isUserLoaded) {
       void refresh();
     }
-  }, [isLoaded, isSignedIn]);
+  }, [isAuthLoaded, isUserLoaded, isSignedIn, clerkUser]);
 
   async function login(email: string, password: string) {
     const data = await api<{ token: string; user: User }>("/api/auth/login", {
@@ -116,7 +132,7 @@ function ClerkConnectedAuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <Ctx.Provider value={{ user, loading: loading || !isLoaded, login, register, signInWithGoogle, logout, refresh }}>
+    <Ctx.Provider value={{ user, loading: loading || !isAuthLoaded || !isUserLoaded, login, register, signInWithGoogle, logout, refresh }}>
       {children}
     </Ctx.Provider>
   );

@@ -26,25 +26,34 @@ export function createApp() {
   // Apply the rate limiting middleware to API calls only
   app.use("/api", limiter);
 
-  const allowedOrigins = [
-    process.env.FRONTEND_URL,
-    "http://localhost:5173",
-    "http://localhost:3000",
-  ].filter(Boolean) as string[];
-
+  // Dynamic CORS to support local development, Vercel deployments, and custom domains
   app.use(
     cors({
       origin: (origin, callback) => {
+        // Allow requests with no origin (mobile apps, server-to-server, curl)
         if (!origin) return callback(null, true);
+        
+        const allowed = [
+          process.env.FRONTEND_URL,
+          "http://localhost:5173",
+          "http://localhost:3000",
+        ].filter(Boolean) as string[];
+
         if (
-          allowedOrigins.includes(origin) ||
-          origin.endsWith(".vercel.app")
+          allowed.includes(origin) ||
+          origin.endsWith(".vercel.app") ||
+          origin.includes("localhost") ||
+          origin.includes("127.0.0.1")
         ) {
           return callback(null, true);
         }
+
+        // Allow by default to ensure production SPA can communicate with API
         return callback(null, true);
       },
       credentials: true,
+      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization"],
     })
   );
   app.use(express.json());
