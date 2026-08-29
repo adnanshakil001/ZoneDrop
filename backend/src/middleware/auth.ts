@@ -43,6 +43,8 @@ export async function requireAuth(req: Request, res: Response, next: NextFunctio
   }
 
   const rawToken = header.slice(7).trim();
+  const clerkSecretKey = process.env.CLERK_SECRET_KEY;
+  const clerkPublishableKey = process.env.CLERK_PUBLISHABLE_KEY;
 
   // 1. Attempt Clerk Token Verification if configured
   if (clerkSecretKey && !clerkSecretKey.includes("YOUR_SECRET_KEY")) {
@@ -59,7 +61,11 @@ export async function requireAuth(req: Request, res: Response, next: NextFunctio
           where: { clerkUserId },
         });
 
-        if (!dbUser && clerkClient) {
+        if (!dbUser) {
+          const clerkClient = createClerkClient({
+            secretKey: clerkSecretKey,
+            publishableKey: clerkPublishableKey,
+          });
           // Fetch user details from Clerk to get email & name
           const clerkUser = await clerkClient.users.getUser(clerkUserId);
           const email = clerkUser.emailAddresses[0]?.emailAddress?.toLowerCase();
