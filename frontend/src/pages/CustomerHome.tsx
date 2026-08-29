@@ -15,6 +15,7 @@ type Order = {
   paymentType: string;
   chargeableWeight: number;
   createdAt: string;
+  assignedAgent?: { name: string; phone: string; email: string };
 };
 
 /**

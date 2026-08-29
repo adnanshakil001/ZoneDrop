@@ -27,7 +27,7 @@ describe("LocationPickerMap", () => {
       address: "Some Generic Address",
       lat: 28,
       lng: 77,
-      pincode: undefined
+      pincode: null
     });
 
     const onSelectMock = vi.fn();
@@ -45,7 +45,7 @@ describe("LocationPickerMap", () => {
       address: "Some Generic Address",
       lat: 28,
       lng: 77,
-      pincode: undefined
+      pincode: null
     });
   });
 });
