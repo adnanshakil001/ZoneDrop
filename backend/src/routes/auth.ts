@@ -53,7 +53,7 @@ authRouter.post("/login", async (req, res) => {
     return;
   }
   const user = await prisma.user.findUnique({ where: { email: parsed.data.email.toLowerCase() } });
-  if (!user || !(await bcrypt.compare(parsed.data.password, user.passwordHash))) {
+  if (!user || !user.passwordHash || !(await bcrypt.compare(parsed.data.password, user.passwordHash))) {
     res.status(401).json({ error: "Invalid email or password" });
     return;
   }
