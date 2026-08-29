@@ -113,14 +113,36 @@
 * Connected the **"Continue with Google"** and **"Sign up with Google"** buttons on `LoginPage.tsx` and `RegisterPage.tsx` with dedicated SSO redirect handling.
 * Successfully built and verified backend test suites (69 tests passed) and frontend production bundles.
 
+## Phase 15 — Leaflet Map Location Picker & Geocoding
+
+* Integrated Leaflet and OpenStreetMap (`react-leaflet`, `leaflet`) into `NewOrderPage.tsx` via `LocationPickerMap.tsx`.
+* Designed a dual "Type Manually / Pick on Map" input mode allowing users to drop a pin on a live map.
+* Built reverse geocoding via OpenStreetMap Nominatim API with an 800ms debounce timer to prevent rate limit violations.
+* Implemented graceful pincode fallback handling: alerts the user to confirm their postal code when boundary data is missing while retaining exact GPS coordinates (`lat`/`lng`).
+* Added `pickupLat`, `pickupLng`, `dropLat`, and `dropLng` to the PostgreSQL `Order` schema and validated them in backend routes.
+* Resolved Vite asset loading issues for Leaflet marker icons via `leafletIcons.ts`.
+
+## Phase 16 — Live Tracking Dashboard, Production Hardening & Testing
+
+* Replaced placeholder tracking data on `CustomerHome.tsx` with a dynamic 4-stage tracking timeline driven by the active order's lifecycle.
+* Integrated assigned courier details and responsive visual indicators (`completed`, `current` pulsing, `upcoming`).
+* Configured wildcard CORS in Express backend (`app.ts`) to seamlessly accept requests from all Vercel deployment URLs and custom domains.
+* Enhanced `LoginPage.tsx` and `RegisterPage.tsx` with auto-redirect for active sessions, error recovery, and 1-click sign-out.
+* Implemented client-side session cache fallback in `auth.tsx` to prevent redirect loops during backend cold-starts.
+* Created `docker-compose.yml` for local PostgreSQL 16 database provisioning.
+* Added backend Zod schema validation tests for coordinate payloads and created frontend Vitest test suite (`LocationPickerMap.test.tsx`) with Leaflet mocks.
+
 ---
 
 ## Current Progress
 
 * **Production-Ready Full-Stack Architecture**: Decoupled Express (TypeScript) REST backend and React (Vite) frontend with Prisma ORM and Neon PostgreSQL database.
 * **Modern Multi-Provider Authentication**: Seamless Google OAuth via Clerk alongside custom JWT authentication for seeded accounts, protected with RBAC and IDOR guards.
+* **Interactive Map Location Picking**: OpenStreetMap pin-drop location selection with reverse geocoding, rate-limiting protection, and coordinate persistence.
 * **Intelligent Logistics Engines**: Fully configurable mathematical rate engine (volumetric weight + dynamic tariffs + COD) and capacity-aware courier auto-assignment with zero hardcoding.
 * **Three Dedicated Portals**: Fully functional, secure portals for Customers (quoting, ordering, tracking, rescheduling), Couriers (run-sheet, duty toggle, status updates), and Admins (dispatching, auto-assignment, zone/rate configuration).
 * **Enterprise Design System**: High-performance ZoneDrop aesthetic implemented across the public Landing Page, Login portal, and all role dashboards.
 * **Auditability & Reliability**: Append-only status tracking history on every transition and decoupled asynchronous customer notification system.
+* **Comprehensive Test Suites**: 70 backend unit tests and frontend component tests verifying calculation engines, state machines, and map interactions.
+
 
