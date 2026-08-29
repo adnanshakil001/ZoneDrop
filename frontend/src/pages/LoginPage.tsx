@@ -1,21 +1,28 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { homePath, useAuth } from "../auth";
 
 export function LoginPage() {
-  const { login, signInWithGoogle } = useAuth();
+  const { user, loading: authLoading, login, signInWithGoogle, logout } = useAuth();
   const nav = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Auto-redirect if already logged in
+  useEffect(() => {
+    if (!authLoading && user) {
+      nav(homePath(user.role), { replace: true });
+    }
+  }, [user, authLoading, nav]);
+
   async function handleLogin(eMail: string, pWord: string) {
     setError("");
     setLoading(true);
     try {
-      const user = await login(eMail, pWord);
-      nav(homePath(user.role));
+      const loggedInUser = await login(eMail, pWord);
+      nav(homePath(loggedInUser.role));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Invalid credentials");
     } finally {
@@ -33,8 +40,26 @@ export function LoginPage() {
     setLoading(true);
     try {
       await signInWithGoogle();
+      if (user) {
+        nav(homePath(user.role));
+      } else {
+        nav("/app");
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Google sign-in failed");
+      const msg = err instanceof Error ? err.message : "Google sign-in failed";
+      setError(msg);
+      setLoading(false);
+    }
+  }
+
+  async function handleLogout() {
+    setError("");
+    setLoading(true);
+    try {
+      await logout();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to log out");
+    } finally {
       setLoading(false);
     }
   }
@@ -139,11 +164,32 @@ export function LoginPage() {
                 </div>
               </div>
 
-              {/* Error */}
+              {/* Error with Action Buttons */}
               {error && (
-                <div className="rounded-lg border border-error-container bg-error-container/40 p-2.5 font-body-sm text-body-sm text-error font-medium flex items-center gap-1.5">
-                  <span className="material-symbols-outlined text-[16px]">error</span>
-                  <span>{error}</span>
+                <div className="rounded-lg border border-error-container bg-error-container/40 p-3 font-body-sm text-body-sm text-error font-medium flex flex-col gap-2">
+                  <div className="flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[18px]">error</span>
+                    <span>{error}</span>
+                  </div>
+                  {(error.toLowerCase().includes("signed in") || error.toLowerCase().includes("already")) && (
+                    <div className="flex items-center gap-3 pt-2 border-t border-error/20 mt-1">
+                      <Link
+                        to="/app"
+                        className="text-xs font-bold text-secondary hover:underline flex items-center gap-1"
+                      >
+                        <span>Go to Dashboard</span>
+                        <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+                      </Link>
+                      <span className="text-outline-variant">•</span>
+                      <button
+                        type="button"
+                        onClick={() => void handleLogout()}
+                        className="text-xs font-bold text-error hover:underline cursor-pointer"
+                      >
+                        Sign Out & Try Again
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
 

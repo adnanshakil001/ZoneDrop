@@ -1,22 +1,29 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../auth";
+import { homePath, useAuth } from "../auth";
 import { Button, Field, Logo, inputClass } from "../components/ui";
 
 export function RegisterPage() {
-  const { register, signInWithGoogle } = useAuth();
+  const { user, loading: authLoading, register, signInWithGoogle, logout } = useAuth();
   const nav = useNavigate();
   const [form, setForm] = useState({ name: "", email: "", password: "", phone: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Auto-redirect if already logged in
+  useEffect(() => {
+    if (!authLoading && user) {
+      nav(homePath(user.role), { replace: true });
+    }
+  }, [user, authLoading, nav]);
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     setError("");
     setLoading(true);
     try {
-      await register(form);
-      nav("/app");
+      const newUser = await register(form);
+      nav(homePath(newUser.role));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed");
     } finally {
@@ -29,8 +36,25 @@ export function RegisterPage() {
     setLoading(true);
     try {
       await signInWithGoogle();
+      if (user) {
+        nav(homePath(user.role));
+      } else {
+        nav("/app");
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Google sign-up failed");
+      setLoading(false);
+    }
+  }
+
+  async function handleLogout() {
+    setError("");
+    setLoading(true);
+    try {
+      await logout();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to log out");
+    } finally {
       setLoading(false);
     }
   }
@@ -154,9 +178,30 @@ export function RegisterPage() {
               </Field>
 
               {error && (
-                <div className="rounded-lg border border-error-container bg-error-container/40 p-2.5 text-xs text-error font-medium flex items-center gap-1.5">
-                  <span className="material-symbols-outlined text-[16px]">error</span>
-                  <span>{error}</span>
+                <div className="rounded-lg border border-error-container bg-error-container/40 p-2.5 text-xs text-error font-medium flex flex-col gap-1.5">
+                  <div className="flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[16px]">error</span>
+                    <span>{error}</span>
+                  </div>
+                  {(error.toLowerCase().includes("signed in") || error.toLowerCase().includes("already")) && (
+                    <div className="flex items-center gap-3 pt-1.5 border-t border-error/20 mt-0.5">
+                      <Link
+                        to="/app"
+                        className="text-xs font-bold text-secondary hover:underline flex items-center gap-1"
+                      >
+                        <span>Go to Dashboard</span>
+                        <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+                      </Link>
+                      <span className="text-outline-variant">•</span>
+                      <button
+                        type="button"
+                        onClick={() => void handleLogout()}
+                        className="text-xs font-bold text-error hover:underline cursor-pointer"
+                      >
+                        Sign Out & Try Again
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
 

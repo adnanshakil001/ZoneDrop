@@ -96,6 +96,10 @@ function ClerkConnectedAuthProvider({ children }: { children: ReactNode }) {
 
   async function signInWithGoogle() {
     if (!signIn) throw new Error("Clerk SignIn not initialized");
+    if (isSignedIn) {
+      await refresh();
+      return;
+    }
     await signIn.authenticateWithRedirect({
       strategy: "oauth_google",
       redirectUrl: "/sso-callback",
